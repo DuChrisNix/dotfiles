@@ -10,7 +10,7 @@ source ~/.vim/unite.vim
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
- vmap <Enter> <Plug>(EasyAlign)
+vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
@@ -36,7 +36,7 @@ let g:badwolf_darkgutter = 1
 let g:badwolf_tabline = 0
 
 " Always show the git gutter
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " Show git gutter signs after typing
 let g:gitgutter_realtime = 1
