@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+# Link VSCode settings
+link_to("vscode/settings.json", "~/Library/Application Support/Code/User/settings.json")
+
+# Install extensions
+extensions_file = File.join(File.dirname(__FILE__), "extensions")
+
+if system("which code > /dev/null 2>&1")
+  File.readlines(extensions_file).each do |ext|
+    ext = ext.strip
+    next if ext.empty?
+    system("code --install-extension #{ext} --force")
+  end
+  puts " * Installed VSCode extensions"
+else
+  puts " ! VSCode CLI (code) not found – install VSCode first, then re-run"
+end

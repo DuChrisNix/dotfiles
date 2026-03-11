@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+casks = %w[
+  font-fira-code-nerd-font
+  visual-studio-code
+  spotify
+  whatsapp
+  warp
+  signal
+  figma
+  readdle-spark
+  microsoft-teams
+  anytype
+  setapp
+  steam
+  raycast
+  insomnia
+  google-chrome
+  discord
+  daisydisk
+]
+
+casks.each do |cask|
+  unless system("brew list --cask #{cask} > /dev/null 2>&1")
+    puts " * Installing #{cask}..."
+    system("brew install --cask #{cask}")
+  end
+end
+
+# Magnet is Mac App Store only – install via mas
+unless system("which mas > /dev/null 2>&1")
+  puts " * Installing mas (Mac App Store CLI)..."
+  system("brew install mas")
+end
+
+puts " * Installing Magnet from Mac App Store..."
+system("mas install 441258766") # Magnet
