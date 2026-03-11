@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+# Install Claude Code CLI
+unless system("which claude > /dev/null 2>&1")
+  puts " * Installing Claude Code CLI..."
+  system("npm install -g @anthropic-ai/claude-code")
+end
+
+# Install peon-ping hook
+peon_dir = File.expand_path("~/.claude/hooks/peon-ping")
+unless File.directory?(peon_dir)
+  puts " * Installing peon-ping..."
+  puts "   peon-ping must be installed manually."
+  puts "   Ask Claude Code: 'install peon-ping'"
+end

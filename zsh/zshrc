@@ -37,7 +37,6 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.g
 
 # Aliases
 alias be='bundle exec'
-alias caskupdate='brew cask list | xargs brew cask reinstall'
 alias ga='git add'
 alias gca='git commit --amend'
 alias gcm='git commit -m'
@@ -53,11 +52,6 @@ alias mykey='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias rc='bundle exec rails c'
 alias rmf="rm -rf"
 alias rs='bundle exec rails s'
-alias server='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
-alias uuid="python -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo"
-alias v='vim'
-alias ya='yarn add'
-alias yag='yarn add global'
 alias yolo='git push --force-with-lease'
 alias zshrc="code ~/.zshrc"
 alias update="source ~/.zshrc"
@@ -93,24 +87,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PNPM_HOME="/Users/chrisnix/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
-
-# Enable mise shims for tool versions
-eval "$(mise activate zsh)"
-export JAVA_HOME="$(/usr/libexec/java_home)"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/chrisnix/.lmstudio/bin"
-# End of LM Studio CLI section
-
-
-# Added by Antigravity
-export PATH="/Users/chrisnix/.antigravity/antigravity/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-
-# bun completions
-[ -s "/Users/chrisnix/.bun/_bun" ] && source "/Users/chrisnix/.bun/_bun"
 
 # peon-ping quick controls
 alias peon="bash /Users/chrisnix/.claude/hooks/peon-ping/peon.sh"

@@ -1,3 +1,27 @@
 #!/usr/bin/env ruby
 link("zsh/zshrc")
 link("zsh/zprofile")
+
+# Install Oh My Zsh if not present
+unless File.directory?(File.expand_path("~/.oh-my-zsh"))
+  puts " * Installing Oh My Zsh..."
+  system('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended')
+end
+
+# Install Starship prompt via Homebrew if not present
+unless system("which starship > /dev/null 2>&1")
+  puts " * Installing Starship prompt..."
+  system("brew install starship")
+end
+
+# Set zsh as default shell if it isn't already
+zsh_path = `which zsh`.strip
+unless ENV["SHELL"] == zsh_path
+  puts " * Setting default shell to zsh..."
+  # Ensure zsh is in /etc/shells
+  shells = File.read("/etc/shells") rescue ""
+  unless shells.include?(zsh_path)
+    system("sudo sh -c 'echo #{zsh_path} >> /etc/shells'")
+  end
+  system("chsh -s #{zsh_path}")
+end
