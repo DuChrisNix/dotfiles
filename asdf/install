@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# Link .tool-versions to home directory
+link("asdf/tool-versions")
+
+# Install asdf via Homebrew if not present
+unless system("which asdf > /dev/null 2>&1") || File.exist?(File.expand_path("~/.asdf/asdf.sh"))
+  puts " * Installing asdf via Homebrew..."
+  system("brew install asdf")
+end
+
+# Add plugins (idempotent – will skip if already installed)
+plugins = %w[nodejs ruby bun]
+plugins.each do |plugin|
+  system("asdf plugin add #{plugin} 2>/dev/null")
+  puts " * asdf plugin: #{plugin}"
+end
+
+# Install all versions from .tool-versions
+puts " * Installing tool versions (this may take a while)..."
+system("asdf install")
+
+# Enable corepack and activate pnpm
+puts " * Enabling corepack + pnpm..."
+system("corepack enable")
+system("corepack install -g pnpm@latest")

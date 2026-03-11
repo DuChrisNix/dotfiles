@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'fileutils'
 
 def link file
   file = File.expand_path file
@@ -7,7 +8,7 @@ end
 
 def link_file file
   target = File.expand_path("~/.#{File.basename(file)}")
-  File.delete(target) if File.symlink? target
+  File.delete(target) if File.symlink?(target) || File.exist?(target)
   File.symlink(file, target)
 
   puts " * Created link #{target} -> #{file}"
@@ -15,17 +16,25 @@ end
 
 def link_dir dir
   target = File.expand_path("~/.#{File.basename(dir)}/")
-  if File.symlink? target
-    require 'fileutils'
-    FileUtils.rm_r target 
-  end
+  FileUtils.rm_r(target) if File.symlink?(target) || File.exist?(target)
 
   File.symlink(dir, target)
   puts " * Created link #{target} -> #{dir}"
 end
 
+def link_to file, target
+  file = File.expand_path file
+  target = File.expand_path target
+
+  FileUtils.mkdir_p(File.dirname(target))
+  File.delete(target) if File.symlink?(target) || File.exist?(target)
+  File.symlink(file, target)
+
+  puts " * Created link #{target} -> #{file}"
+end
+
 Dir.chdir(File.dirname(__FILE__))
-Dir["*"].select{ |path| File.directory? path }.each do |directory|
+Dir["*"].sort.select{ |path| File.directory? path }.each do |directory|
   install_script = "#{directory}/install"
-  load(install_script) if File.exists? install_script
+  load(install_script) if File.exist? install_script
 end

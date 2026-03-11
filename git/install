@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-link "git/gitconfig"
+link_to("git/config", "~/.config/git/config")
+link_to("git/ignore", "~/.config/git/ignore")
+link_to("git/9elements", "~/.config/git/9elements")

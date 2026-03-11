@@ -1,50 +1,70 @@
-# Path to oh-my-zsh installation.
-export ZSH=/Users/chrisnix/.oh-my-zsh
+echo "██████████ ████████ ███░     ████████ ███▄    ▄███ ████████ ███▄    ███ ███████████ █████████"
+echo "███░░░░███ ███░▒▒▒░ ███░     ███░░▒▒▒ █████▄▄█████ ███ ░░ ▒ █████▄  ███ ░░▒▒███  ░░ ███▒▒▒▒░░"
+echo "██████████ ██████░░ ███░     ██████▒  ███ ▀██▀ ███ ██████ ░ ███ ▀██▄███   ░▒███  ░  █████████"
+echo "▒░▒▓ ░▒███ ███░▒ ░  ███░     ███ ░░▒  ███  ░▒  ███ ███  ░   ███░  ▀████    ░███     ░ ░░▒▒███"
+echo "░ ▒  ░▒███ ███ ░ ░  ███░░    ███  ░▒  ███   ░  ███ ███      ███░    ███     ███         ░▒███"
+echo "  ░  ░▒███ ████████ ████████ ████████ ███      ███ ████████ ███░    ███     ███     █████████"
+echo "  ░   ▒░   ░░░ ░ ░  ░▒▓▒░  ░ ░░   ░░░ ░▒░      ░▒░ ░▒▒░   ▒ ░░▒░    ░▒░     ▒░░     ░  ░░░▒▒░"
+echo "      ░    ░░        ░▒░     ░     ░░  ░░       ░   ░▒    ░  ░░     ░░      ░           ░░▒▒"
+echo "           ░          ░            ░    ░            ░       ░░      ░                   ░▒"
+echo "           ░                       ░                          ░                          ░░"
+echo "                                                              ░  Made with ❤️  in Bochum"
 
-# react native android
-export ANDROID_HOME=/Users/chrisnix/Library/Android/sdk/
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
-# RVM
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-# Theme
-ZSH_THEME="spaceship"
-
-# Plugins
-plugins=(git)
-
+# oh-my-zsh stuff.
+export ZSH="/Users/chrisnix/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
+plugins=(git dotenv)
+eval "$(starship init zsh)"
+
+# Z Oxide
+eval "$(zoxide init zsh)"
+
+# Fix locale
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# asdf version manager
+. "$(brew --prefix asdf)/libexec/asdf.sh"
+
+# fuzzy finder
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Aliases
-alias l="ls -hal"
-alias ll="l | less"
-alias rmf="rm -rf"
-alias zshrc="code ~/.zshrc"
-alias server='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias be='bundle exec'
-alias rc='bundle exec rails c'
-alias rs='bundle exec rails s'
-alias mykey='cat ~/.ssh/id_rsa.pub | pbcopy'
+alias caskupdate='brew cask list | xargs brew cask reinstall'
 alias ga='git add'
-alias gr='git reset'
-alias gst='git status'
+alias gca='git commit --amend'
+alias gcm='git commit -m'
 alias gpl='git pull'
 alias gps='git push'
-alias gco='git checkout'
-alias gcm='git commit -m'
-alias gca='git commit --amend'
-alias gf='git flow'
-alias yolo='git push --force'
+alias gr='git reset'
+alias gst='git status'
+alias gsw='git switch'
+alias gl='git log'
+alias l="eza -al --icons --no-permissions"
+alias ll="l | less"
+alias mykey='cat ~/.ssh/id_rsa.pub | pbcopy'
+alias rc='bundle exec rails c'
+alias rmf="rm -rf"
+alias rs='bundle exec rails s'
+alias server='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
+alias uuid="python -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo"
+alias v='vim'
 alias ya='yarn add'
 alias yag='yarn add global'
-alias caskupdate='brew cask list | xargs brew cask reinstall'
-alias v='vim'
+alias yolo='git push --force-with-lease'
+alias zshrc="code ~/.zshrc"
+alias update="source ~/.zshrc"
+alias ..="cd .."
+alias icloud="~/Library/Mobile\ Documents/com~apple~CloudDocs/"
+alias fpson="/bin/launchctl setenv MTL_HUD_ENABLED 1"
+alias fpsoff="/bin/launchctl setenv MTL_HUD_ENABLED 0"
 
 # Functions
 # Make dir and cd into it
@@ -55,7 +75,7 @@ function mkcd {
 
 # Rails new and cd into it
 function rn {
-  rails new $1 && cd $1 && git init && git add . && commit -m 'Initial commit';
+  rails new $1 && cd $1 && git init && git add . && commit -m 'Initial commit'
 }
 
 # Start Rails Server with IP and Port
@@ -63,5 +83,35 @@ function rs {
   rails server -b ${1:-localhost} -p ${2:-3000}
 }
 
+function git:init {
+  git init && git add . && commit -m 'Initial commit'
+}
 
-source "/Users/chrisnix/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# pnpm (via corepack, ships with node)
+export PNPM_HOME="/Users/chrisnix/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# Enable mise shims for tool versions
+eval "$(mise activate zsh)"
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/chrisnix/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# Added by Antigravity
+export PATH="/Users/chrisnix/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# bun completions
+[ -s "/Users/chrisnix/.bun/_bun" ] && source "/Users/chrisnix/.bun/_bun"
+
+# peon-ping quick controls
+alias peon="bash /Users/chrisnix/.claude/hooks/peon-ping/peon.sh"
+[ -f /Users/chrisnix/.claude/hooks/peon-ping/completions.bash ] && source /Users/chrisnix/.claude/hooks/peon-ping/completions.bash

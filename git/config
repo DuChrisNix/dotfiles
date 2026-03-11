@@ -1,0 +1,26 @@
+[color]
+	ui = true
+[user]
+	name = Christian Kienast
+  email = fnatikk@gmail.com
+[includeIf "gitdir:~/9e/"]
+  path = 9elements
+[merge]
+  conflictstyle = diff3
+[rerere]
+  enabled = true
+[core]
+	excludesfile = ~/.config/git/ignore
+[push]
+	default = current
+[credential]
+	helper = osxkeychain
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main

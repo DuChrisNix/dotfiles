@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+link("bash/bashrc")
+link("bash/bash_profile")
+link("bash/profile")

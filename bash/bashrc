@@ -1,0 +1,13 @@
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/chrisnix/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# peon-ping quick controls
+alias peon="bash /Users/chrisnix/.claude/hooks/peon-ping/peon.sh"
+[ -f /Users/chrisnix/.claude/hooks/peon-ping/completions.bash ] && source /Users/chrisnix/.claude/hooks/peon-ping/completions.bash

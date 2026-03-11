@@ -1,0 +1,15 @@
+Host me.github.com
+HostName github.com
+UseKeychain yes
+AddKeysToAgent yes
+IdentitiesOnly yes
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa_personal
+
+Host github.com
+HostName github.com
+UseKeychain yes
+AddKeysToAgent yes
+IdentitiesOnly yes
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa
